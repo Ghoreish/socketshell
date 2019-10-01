@@ -10,7 +10,7 @@ Interact with live python code as it is running, or fight with other users and t
 Usage:
 
 >>> s = ShellServer('localhost', 6666)
->>> print s.server_address
+>>> print(s.server_address)
 >>> s.serve_forever()
 
 
@@ -79,7 +79,7 @@ class _MyConsole(code.InteractiveConsole):
             self.showtraceback()
         else:
             if self._softspace(self.wfile, 0):
-                print >>self.wfile
+                print(self.wfile)
 
 
 class _Tee(object):
@@ -138,7 +138,7 @@ class _MyTCPRequestHandler(SocketServer.StreamRequestHandler):
         server_address_str = ':'.join(map(str, self.connection.getsockname()))
 
         if self.logging:
-            print >>sys.stderr, "-- client", client_address_str, "connected"
+            print(sys.stderr, "-- client", client_address_str, "connected")
             inputoutput = (
                 _Tee(self.rfile, sys.stderr, self._get_formatter(client_address_str, '<')),
                 _Tee(self.wfile, sys.stderr, self._get_formatter(client_address_str, '>'))
@@ -164,10 +164,10 @@ class _MyTCPRequestHandler(SocketServer.StreamRequestHandler):
 
         except StopIteration:
             if self.logging:
-                print >>sys.stderr, "-- client", client_address_str, "closed"
+                print(sys.stderr, "-- client", client_address_str, "closed")
         except SocketServer.socket.error, e:
             if self.logging:
-                print >>sys.stderr, "-- client", client_address_str, "disconnected"
+                print(sys.stderr, "-- client", client_address_str, "disconnected")
 
 
 class ShellServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
@@ -177,7 +177,7 @@ class ShellServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     Usage Example:
 
     >>> s = ShellServer('localhost', 0)
-    >>> print s.server_address
+    >>> print(s.server_address)
     >>> s.serve_forever()
     """
 
@@ -202,7 +202,7 @@ class AsyncShellServer(threading.Thread, ShellServer):
     Usage Example:
 
     >>> s = AsyncShellServer('localhost', 0)
-    >>> print s.server_address
+    >>> print(s.server_address)
     >>> s.setDaemon(True)
     >>> s.start()
     >>> 
@@ -270,7 +270,7 @@ def main():
     server = ShellServer(host, port, logging=not flags.quiet)
 
     if not flags.quiet:
-        print >>sys.stderr, "running on", ':'.join(map(str, server.server_address))
+        print(sys.stderr, "running on", ':'.join(map(str, server.server_address)))
 
     server.start()
 
